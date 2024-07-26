@@ -16,10 +16,24 @@ const useVehicleStore = create((set) => ({
         maintenanceProgress: '',
         fuelEfficiency: '',
         status: 'Active',
+        allocation: {
+            isAllocation: false,
+            project: '',
+            start: '',
+            end: '',
+            user: ''
+        }
     },
     setFormData: (name, value) =>
         set((state) => ({
-            formData: { ...state.formData, [name]: value },
+            formData: {
+                ...state.formData,
+                [name]: value,
+                allocation: {
+                    ...state.formData.allocation,
+                    ...(name === 'isAllocation' || name === 'project' || name === 'start' || name === 'end' || name === 'user' ? { [name]: value } : {})
+                }
+            },
         })),
     addVehicle: async () => {
         const { formData } = useVehicleStore.getState();
@@ -40,6 +54,13 @@ const useVehicleStore = create((set) => ({
                     maintenanceProgress: '',
                     fuelEfficiency: '',
                     status: 'Active',
+                    allocation: {
+                        isAllocation: false,
+                        project: '',
+                        start: '',
+                        end: '',
+                        user: ''
+                    },
                 },
             });
         } catch (error) {
