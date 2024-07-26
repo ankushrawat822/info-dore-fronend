@@ -4,6 +4,7 @@ import VehicleAllocateComp from './VehicleAllocateComp';
 import VehicleMoniterComp from './VehicleMoniterComp';
 import VehicleOptimizeComp from './VehicleOptimizeComp';
 
+
 const Vehicle = () => {
 
     const [addComp, setAddComp] = useState(false);
@@ -14,14 +15,8 @@ const Vehicle = () => {
 
 
     return (
-        <div>
-            <center className='text-3xl font-semibold cursor-pointer' onClick={() => {
-                setAddComp(false);
-                setAllocateComp(false);
-                setMoniterComp(false);
-                setOptimizeComp(false);
-                setCloseCard(false);
-            }}>Vehicle</center>
+        <div className='relative'>
+            <center className='text-3xl font-semibold'>Vehicle</center>
             {
                 !closeCard &&
                 <section className='flex justify-evenly gap-10 mt-20'>
@@ -38,6 +33,16 @@ const Vehicle = () => {
                         onClick={() => { setCloseCard(true); setOptimizeComp(true); }}
                     >OPTIMIZE</div>
                 </section>
+            }
+
+            {
+                closeCard && <div className='bg-gray-500 text-gray-100 absolute top-0 right-2 rounded-md px-4 py-2 cursor-pointer' onClick={() => {
+                    setAddComp(false);
+                    setAllocateComp(false);
+                    setMoniterComp(false);
+                    setOptimizeComp(false);
+                    setCloseCard(false);
+                }}>BACK</div>
             }
 
             <div>
