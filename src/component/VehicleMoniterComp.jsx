@@ -115,7 +115,7 @@ const VehicleMoniterComp = () => {
                 ) : (
 
                     <table className="min-w-full bg-white border border-gray-300">
-                        <thead className="bg-gray-200">
+                        <thead className="bg-blue-200">
                             <tr>
                                 <th className="py-2 px-4 text-left text-gray-600 font-medium border-b">ID</th>
                                 <th className="py-2 px-4 text-left text-gray-600 font-medium border-b">Type</th>

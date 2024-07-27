@@ -55,10 +55,9 @@ const Dashboard = () => {
       </div> 
       */}
 
-      <div className='flex w-full'>
+      <div className='flex w-full pt-4'>
         <AsideBar section={section} setSection={setSection}></AsideBar>
-        <div className='bg-gray-100 w-full ml-2 mr-7 my-2 min-h-[600px] rounded-xl shadow-3xl overflow-hidden'>
-          {(section) === '' && <center>Please select a section from Aside Bar</center>}
+        <div className='bg-blue-50 w-full ml-2 mr-7 my-2 min-h-[600px] rounded-xl shadow-3xl overflow-hidden border border-gray-500 shadow-xl'>
           {(section === 'vehicle' && <Vehicle />)}
           {(section === 'building' && <Building />)}
         </div>

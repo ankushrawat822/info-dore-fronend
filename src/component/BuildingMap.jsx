@@ -30,10 +30,9 @@ let DefaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
-const BuildingMap = ({ buildings }) => {
+const BuildingMap = ({ buildings, setUpdated }) => {
     const [map, setMap] = useState(null);
     const [selectedBuilding, setSelectedBuilding] = useState(null);
-    const [newBuildingAdded, setNewBuildingAdded] = useState(false);
     const [buildingDetails, setBuildingDetails] = useState({
         name: '',
         type: '',
@@ -57,10 +56,11 @@ const BuildingMap = ({ buildings }) => {
             const bounds = L.latLngBounds(buildings.map(b => [b.lat, b.lng]));
             map.fitBounds(bounds);
         }
-    }, [map, buildings, newBuildingAdded]);
+    }, [map, buildings]);
 
     const handleMarkerClick = (building) => {
         setSelectedBuilding(building);
+        setSeeMore(false)
     };
 
 
@@ -72,6 +72,14 @@ const BuildingMap = ({ buildings }) => {
         }));
     };
 
+    const handleInputChangeForAddOn = (e) => {
+        const { name, value } = e.target;
+        setAddOnDetails(prevDetails => ({
+            ...prevDetails,
+            [name]: value,
+        }));
+    }
+
     const handleSelectChange = (value) => {
         setBuildingDetails(prevDetails => ({
             ...prevDetails,
@@ -79,12 +87,20 @@ const BuildingMap = ({ buildings }) => {
         }));
     };
 
+    const handleSelectChangeForAddOn = (value) => {
+        setAddOnDetails(prevDetails => ({
+            ...prevDetails,
+            energyEfficiency: value,
+        }));
+    };
+
+
     const handleSubmit = async () => {
         try {
             const response = await axios.post(`${import.meta.env.VITE_REACT_BACKEND_URL}/api/add-buildings`, buildingDetails);
             console.log('Building added successfully:', response.data);
             handleOpen(); // Close the dialog
-            setNewBuildingAdded(!newBuildingAdded)
+            setUpdated(prev => !prev)
         } catch (error) {
             console.error('Error adding building:', error);
         }
@@ -92,9 +108,10 @@ const BuildingMap = ({ buildings }) => {
 
     const handleAddOnSubmit = async () => {
         try {
-            const response = await axios.put(`${import.meta.env.VITE_REACT_BACKEND_URL}/api/update-buildings`, addOnDetails);
+            const response = await axios.put(`${import.meta.env.VITE_REACT_BACKEND_URL}/api/update-building/${selectedBuilding._id}`, addOnDetails);
             console.log('Building details updated successfully:', response.data);
-            handleAddOnOpen(); // Close the dialog
+            handleAddOnOpen();
+            setUpdated(prev => !prev)
         } catch (error) {
             console.error('Error adding building:', error);
         }
@@ -107,7 +124,6 @@ const BuildingMap = ({ buildings }) => {
 
     const [openAddOnDetails, setOpenAddOnDetails] = useState(false);
     const handleAddOnOpen = () => setOpenAddOnDetails(!openAddOnDetails);
-
     return (
         <div className="h-[600px] flex">
             <MapContainer
@@ -278,7 +294,7 @@ const BuildingMap = ({ buildings }) => {
                             name="yearBuilt"
                             type="number"
                             value={addOnDetails.yearBuilt}
-                            onChange={handleInputChange}
+                            onChange={handleInputChangeForAddOn}
                             required
                         />
                         <Input
@@ -286,7 +302,7 @@ const BuildingMap = ({ buildings }) => {
                             name="totalArea"
                             type="number"
                             value={addOnDetails.totalArea}
-                            onChange={handleInputChange}
+                            onChange={handleInputChangeForAddOn}
                             required
 
                         />
@@ -295,7 +311,7 @@ const BuildingMap = ({ buildings }) => {
                             name="lastRenovation"
                             type="date"
                             value={addOnDetails.lastRenovation}
-                            onChange={handleInputChange}
+                            onChange={handleInputChangeForAddOn}
                             required
 
                         />
@@ -304,7 +320,7 @@ const BuildingMap = ({ buildings }) => {
                             name="nextInspection"
                             type="date"
                             value={addOnDetails.nextInspection}
-                            onChange={handleInputChange}
+                            onChange={handleInputChangeForAddOn}
                             required
 
                         />
@@ -313,24 +329,29 @@ const BuildingMap = ({ buildings }) => {
                             name="maintenanceStatus"
                             type="number"
                             value={addOnDetails.maintenanceStatus}
-                            onChange={handleInputChange}
+                            onChange={handleInputChangeForAddOn}
                             required
 
                         />
-                        <Input
-                            label="Energy Efficiency"
-                            name="energyEfficiency"
+                        <Select
                             value={addOnDetails.energyEfficiency}
-                            onChange={handleInputChange}
+                            onChange={handleSelectChangeForAddOn}
+                            label="Energy Efficiency"
                             required
-
-                        />
+                        >
+                            <Option value="A">A</Option>
+                            <Option value="B">B</Option>
+                            <Option value="C">C</Option>
+                            <Option value="D">D</Option>
+                            <Option value="E">E</Option>
+                            <Option value="F">F</Option>
+                        </Select>
                         <Input
                             label="Occupancy Rate (%)"
                             name="occupancyRate"
                             type="number"
                             value={addOnDetails.occupancyRate}
-                            onChange={handleInputChange}
+                            onChange={handleInputChangeForAddOn}
                             required
 
                         />

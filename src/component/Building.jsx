@@ -6,12 +6,13 @@ import axios from 'axios';
 const Building = () => {
     const [buildings, setBuildings] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [updated, setUpdated] = useState(false);
 
     // Function to geocode addresses
     async function geocodeAddresses(buildings) {
         const geocodedBuildings = [];
         for (const building of buildings) {
-            const address = `${building.address}, India`;
+            const address = `${building.address} Indore , India`;
             try {
                 const { data } = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json`, {
                     params: {
@@ -52,16 +53,16 @@ const Building = () => {
         };
 
         fetchBuildings();
-    }, []);
+    }, [updated]);
 
     if (loading) {
-        return <p>Loading buildings data...</p>;
+        return <p className='p-4'>Loading buildings data...</p>;
     }
 
     return (
-        <div>
+        <div className='bg-white'>
             {buildings.length > 0 ? (
-                <BuildingMap buildings={buildings} />
+                <BuildingMap buildings={buildings} setUpdated={setUpdated} />
             ) : (
                 <p>No buildings data available.</p>
             )}
