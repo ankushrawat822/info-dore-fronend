@@ -83,6 +83,9 @@ const VehicleAddComp = () => {
                                         max={new Date().getFullYear() + 1}
                                     />
                                 </div>
+
+                            </div>
+                            <div className='w-1/2'>
                                 <div className="mb-4">
                                     <Input
                                         label="License Plate"
@@ -104,11 +107,6 @@ const VehicleAddComp = () => {
                                         min="0"
                                     />
                                 </div>
-
-                            </div>
-                            <div className='w-1/2'>
-
-
                                 <div className="mb-4">
                                     <Input
                                         label="Last Maintenance"
@@ -119,7 +117,7 @@ const VehicleAddComp = () => {
                                         required
                                     />
                                 </div>
-                                <div className="mb-4">
+                                {/* <div className="mb-4">
                                     <Input
                                         label="Next Maintenance"
                                         type="date"
@@ -128,8 +126,8 @@ const VehicleAddComp = () => {
                                         onChange={handleChange}
                                         required
                                     />
-                                </div>
-                                <div className="mb-4">
+                                </div> */}
+                                {/* <div className="mb-4">
                                     <Input
                                         label="Maintenance Progress"
                                         type="number"
@@ -140,8 +138,8 @@ const VehicleAddComp = () => {
                                         min="0"
                                         max="100"
                                     />
-                                </div>
-                                <div className="mb-4">
+                                </div> */}
+                                {/* <div className="mb-4">
                                     <Input
                                         label="Fuel Efficiency"
                                         type="number"
@@ -151,7 +149,7 @@ const VehicleAddComp = () => {
                                         required
                                         min="0"
                                     />
-                                </div>
+                                </div> */}
                                 <div className="mb-4">
                                     <Select
                                         label="Status"
@@ -165,15 +163,15 @@ const VehicleAddComp = () => {
                                         <Option value="Out of Service">Out of Service</Option>
                                     </Select>
                                 </div>
-                                <Button type="submit" color="blue" ripple="light">
-                                    Add Vehicle
-                                </Button>
-
                             </div>
+                        </div>
+                        <div className='w-fit mx-auto '>
+                            <Button type="submit" color="blue" ripple="light">
+                                Add Vehicle
+                            </Button>
                         </div>
                     </form>
                 </div>
-                <div className='h-[150px] w-[150px] border-2 border-black flex justify-center items-center curspio'>Import CSV</div>
             </div>
         </>
     )

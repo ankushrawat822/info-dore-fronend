@@ -54,8 +54,8 @@ const CarArtifact = ({ data }) => {
                     <div className="mt-2 bg-gray-200 rounded-full h-2.5">
                         <div
                             className="bg-green-600 h-2.5 rounded-full"
-                            style={{ width: `${data.maintenanceProgress * 100}%` }}
-                            title={`Maintenance Progress: ${data.maintenanceProgress * 100}%`}
+                            style={{ width: `${data.maintenanceProgress}%` }}
+                            title={`Maintenance Progress: ${data.maintenanceProgress}%`}
                         ></div>
                     </div>
                 </div>
