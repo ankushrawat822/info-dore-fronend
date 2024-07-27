@@ -56,11 +56,11 @@ const Building = () => {
     }, [updated]);
 
     if (loading) {
-        return <p>Loading buildings data...</p>;
+        return <p className='p-4'>Loading buildings data...</p>;
     }
 
     return (
-        <div>
+        <div className='bg-white'>
             {buildings.length > 0 ? (
                 <BuildingMap buildings={buildings} setUpdated={setUpdated} />
             ) : (

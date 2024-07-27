@@ -33,9 +33,9 @@ const formatDate = (dateString) => {
 
 const CarArtifact = ({ data }) => {
     return (
-        <div className="max-w-4xl mx-auto p-6 bg-gray-100 rounded-lg">
+        <div className="max-w-4xl mx-auto p-6 bg-blue-100 rounded-lg">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-white p-4 rounded-md shadow transition-transform hover:scale-105">
+                <div className="bg-white p-4 rounded-lg shadow transition-transform hover:scale-105">
                     <div className="flex items-center mb-2">
                         <CarIcon />
                         <h2 className="text-xl font-bold ml-2">{`${data.make} ${data.model} ${data.year}`}</h2>
@@ -44,7 +44,7 @@ const CarArtifact = ({ data }) => {
                     <p>Mileage: {data.mileage}</p>
                 </div>
 
-                <div className="bg-white p-4 rounded-md shadow transition-transform hover:scale-105">
+                <div className="bg-white p-4 rounded-lg shadow transition-transform hover:scale-105">
                     <div className="flex items-center mb-2">
                         <WrenchIcon />
                         <h3 className="text-lg font-semibold ml-2">Maintenance</h3>
@@ -60,7 +60,7 @@ const CarArtifact = ({ data }) => {
                     </div>
                 </div>
 
-                <div className="bg-white p-4 rounded-md shadow transition-transform hover:scale-105">
+                <div className="bg-white p-4 rounded-lg shadow transition-transform hover:scale-105">
                     <div className="flex items-center mb-2">
                         <FuelIcon />
                         <h3 className="text-lg font-semibold ml-2">Status</h3>
@@ -69,7 +69,7 @@ const CarArtifact = ({ data }) => {
                     <p className="font-bold text-green-600">{data.status}</p>
                 </div>
 
-                <div className="bg-white p-4 rounded-md shadow transition-transform hover:scale-105">
+                <div className="bg-white p-4 rounded-lg shadow transition-transform hover:scale-105">
                     <div className="flex items-center mb-2">
                         <CalendarIcon />
                         <h3 className="text-lg font-semibold ml-2">Allocation</h3>

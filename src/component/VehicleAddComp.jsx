@@ -34,11 +34,11 @@ const VehicleAddComp = () => {
         <>
             <Toaster position='top-right' richColors ></Toaster>
             <div className='flex justify-evenly items-center mt-20'>
-                <div>
+                <div className=' lg:w-[60%] '>
                     <form onSubmit={handleSubmit} className="p-7 shadow-lg rounded-lg bg-white">
-                        <div className='flex gap-5'>
-                            <div>
-                                <div className="mb-4">
+                        <div className='flex gap-5 w-full'>
+                            <div className=' w-1/2' >
+                                <div className="mb-4 ">
                                     <Select
                                         label="Type"
                                         name="type"
@@ -106,7 +106,7 @@ const VehicleAddComp = () => {
                                 </div>
 
                             </div>
-                            <div>
+                            <div className='w-1/2'>
 
 
                                 <div className="mb-4">

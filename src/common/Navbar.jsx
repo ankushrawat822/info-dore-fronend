@@ -38,17 +38,21 @@ const Navbar = () => {
 
 
     const navList = (
-        <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-            <Typography
-                as="li"
-                variant="small"
-                color="blue-gray"
-                className="p-1 font-normal"
-            >
-                <p className="flex items-center">
-                    Pages
-                </p>
-            </Typography>
+        <ul className="mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+            <Link to="/">
+
+                <Typography
+                    as="li"
+                    variant="small"
+                    color="blue-gray"
+                    className="p-1 font-normal"
+                >
+                    <p className="flex items-center">
+                        Home
+                    </p>
+                </Typography>
+            </Link>
+
 
             <Link to="/dashboard">
 
@@ -70,15 +74,15 @@ const Navbar = () => {
 
     return (
         <>
-            <div className="-m-2 pr-4 mb-2 max-h-[768px] w-[calc(100%+40px)] ">
+            <div className="bg-white h-[67px] w-[calc(100%)] ">
                 <MaterialNavbar className="sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-2 lg:px-8 lg:py-4">
                     <div className="flex items-center justify-between text-blue-gray-900">
                         <Typography
                             as="a"
                             href="#"
-                            className="mr-4 cursor-pointer py-1.5 font-medium"
+                            className="mr-4  cursor-pointer py-1.5 font-bold text-xl"
                         >
-                            Template
+                            INFO'DORE
                         </Typography>
                         <div className="flex items-center gap-4">
                             <div className="mr-4 hidden lg:block">{navList}</div>
@@ -97,7 +101,7 @@ const Navbar = () => {
 
                                                 {operAccountDropDown &&
                                                     <ul role="menu"
-                                                        className="absolute z-10  flex min-w-[180px] flex-col gap-2 right-4 top-16 rounded-md border border-blue-gray-50 bg-white p-3 font-sans text-sm font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none">
+                                                        className="absolute z-10  flex min-w-[180px] flex-col gap-2 right-4 top-16 rounded-md border border-blue-gray-50 bg-white p-3 font-sans text-sm font-normal text-blue-gray-500 focus:outline-none">
                                                         <button role="menuitem"
                                                             className="flex w-full cursor-pointer select-none items-center gap-2 rounded-md px-3 pt-[9px] pb-2 text-start leading-tight outline-none transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:text-blue-gray-900 focus:bg-blue-gray-50 focus:bg-opacity-80 focus:text-blue-gray-900 active:bg-blue-gray-50 active:bg-opacity-80 active:text-blue-gray-900">
                                                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

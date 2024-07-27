@@ -22,7 +22,7 @@ const Vehicle = () => {
                 <section className='flex justify-evenly gap-10'>
                     <div className='w-full'>
                         <div className='flex justify-evenly'>
-                            <div className="relative flex flex-col mt-6 text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-96">
+                            <div className="relative flex flex-col mt-6 text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-96 border border-gray-400">
                                 <div className="p-6">
                                     <h5 className="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
                                         Add Vehicle
@@ -40,7 +40,7 @@ const Vehicle = () => {
                                     </button>
                                 </div>
                             </div>
-                            <div className="relative flex flex-col mt-6 text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-96">
+                            <div className="relative flex flex-col mt-6 text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-96 border border-gray-400">
                                 <div className="p-6">
                                     <h5 className="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
                                         Allocate Vehicle
@@ -60,7 +60,7 @@ const Vehicle = () => {
                             </div>
                         </div>
                         <div className='flex justify-evenly mt-5'>
-                            <div className="relative flex flex-col mt-6 text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-96">
+                            <div className="relative flex flex-col mt-6 text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-96 border border-gray-400">
                                 <div className="p-6">
                                     <h5 className="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
                                         Moniter Vehicle
@@ -78,7 +78,7 @@ const Vehicle = () => {
                                     </button>
                                 </div>
                             </div>
-                            <div className="relative flex flex-col mt-6 text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-96">
+                            <div className="relative flex flex-col mt-6 text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-96 border border-gray-400">
                                 <div className="p-6">
                                     <h5 className="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
                                         Optimize Vehicle
@@ -114,7 +114,7 @@ const Vehicle = () => {
             }
 
             {
-                closeCard && <div className='bg-blue-500 text-gray-100 absolute top-2 right-2 rounded-md px-4 py-2 cursor-pointer ' onClick={() => {
+                closeCard && <div className='bg-blue-500 text-gray-100 absolute top-4 right-10 rounded-md px-4 py-2 cursor-pointer ' onClick={() => {
                     setAddComp(false);
                     setAllocateComp(false);
                     setMoniterComp(false);
@@ -127,7 +127,7 @@ const Vehicle = () => {
                 {addComp && <VehicleAddComp />}
                 {allocateComp && <VehicleAllocateComp />}
                 {moniterComp && <VehicleMoniterComp />}
-                {optimizeComp && <VehicleOptimizeComp />}
+                {/* {optimizeComp && <VehicleOptimizeComp />} */}
             </div>
         </div >
     )

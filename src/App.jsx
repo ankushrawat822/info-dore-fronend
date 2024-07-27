@@ -15,36 +15,36 @@ function App() {
   const router = createBrowserRouter([
     {
       path: '/',
-      element :  <><Navbar></Navbar><Home></Home></>,
+      element: <><Navbar></Navbar><Home></Home></>,
     },
-     {
-       path: '/dashboard',
-       element : <PrivateRoutes element={<><Navbar></Navbar><Dashboard /></>} />,
-     },
-     {
-      path : 'login',
-      element :  <Login></Login>
-     },
-     {
-      path : 'signup',
-      element :  <SignUp></SignUp>
-     },
-     {
-      path : 'payment-success',
-      element :  <PaymentSuccess></PaymentSuccess>
-     },
-     {
-      path : 'forgot-password',
-      element :  <ForgotPassword></ForgotPassword>
-     },
+    {
+      path: '/dashboard',
+      element: <PrivateRoutes element={<div className='h-screen bg-gray-200'><Navbar></Navbar><Dashboard /></div>} />,
+    },
+    {
+      path: 'login',
+      element: <Login></Login>
+    },
+    {
+      path: 'signup',
+      element: <SignUp></SignUp>
+    },
+    {
+      path: 'payment-success',
+      element: <PaymentSuccess></PaymentSuccess>
+    },
+    {
+      path: 'forgot-password',
+      element: <ForgotPassword></ForgotPassword>
+    },
   ])
 
   return (
     <>
-     
+
       <RouterProvider router={router}></RouterProvider>
 
- 
+
     </>
   )
 }
