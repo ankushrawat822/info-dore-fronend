@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import BuildingMap from './BuildingMap';
-import { BACKEND_URL, GOOGLE_API_KEY } from '../utils/_helper';
+import { BACKEND_URL } from '../utils/_helper';
 import axios from 'axios';
 
 
@@ -17,7 +17,7 @@ const Building = () => {
                 const { data } = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json`, {
                     params: {
                         address: address,
-                        key: GOOGLE_API_KEY
+                        key: import.meta.env.VITE_REACT_GOOGLE_API_KEY
                     }
                 });
                 const { results } = data
