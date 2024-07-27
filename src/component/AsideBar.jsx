@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 const AsideBar = ({ section, setSection }) => {
-    const [selected, setSelected] = useState('0');
+    const [selected, setSelected] = useState('1');
 
     return (
         <div className='bg-gray-300 w-fit h-fit m-3  rounded-md flex flex-col cursor-pointer'>

@@ -1,10 +1,9 @@
 import create from 'zustand';
 import axios from 'axios';
-import API_KEY from '../utils/_helper';
+import { API_KEY } from '../utils/_helper';
 
 const useVehicleStore = create((set) => ({
     formData: {
-        id: '',
         type: '',
         make: '',
         model: '',
@@ -42,7 +41,6 @@ const useVehicleStore = create((set) => ({
             console.log('Vehicle added:', response.data);
             set({
                 formData: {
-                    id: '',
                     type: '',
                     make: '',
                     model: '',

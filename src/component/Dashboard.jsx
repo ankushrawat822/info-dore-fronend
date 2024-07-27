@@ -16,7 +16,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const location = useLocation()
 
-  const [section, setSection] = useState('');
+  const [section, setSection] = useState('vehicle');
 
   useEffect(() => {
     const auth = getAuth(app)
@@ -57,7 +57,7 @@ const Dashboard = () => {
 
       <div className='flex w-full'>
         <AsideBar section={section} setSection={setSection}></AsideBar>
-        <div className='bg-gray-300 w-full ml-2 mr-7 my-2 min-h-[600px] rounded-lg p-3 shadow-xl'>
+        <div className='bg-gray-300 w-full ml-2 mr-7 my-2 min-h-[600px] rounded-xl shadow-3xl overflow-hidden'>
           {(section) === '' && <center>Please select a section from Aside Bar</center>}
           {(section === 'vehicle' && <Vehicle />)}
           {(section === 'building' && <Building />)}

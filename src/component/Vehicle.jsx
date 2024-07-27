@@ -15,7 +15,7 @@ const Vehicle = () => {
 
 
     return (
-        <div className='relative'>
+        <div className='relative p-3'>
             <center className='text-3xl font-semibold'>Vehicle</center>
             {
                 !closeCard &&
@@ -36,7 +36,7 @@ const Vehicle = () => {
             }
 
             {
-                closeCard && <div className='bg-gray-500 text-gray-100 absolute top-0 right-2 rounded-md px-4 py-2 cursor-pointer' onClick={() => {
+                closeCard && <div className='bg-blue-500 text-gray-100 absolute top-2 right-2 rounded-md px-4 py-2 cursor-pointer ' onClick={() => {
                     setAddComp(false);
                     setAllocateComp(false);
                     setMoniterComp(false);
