@@ -19,7 +19,7 @@ function App() {
     },
     {
       path: '/dashboard',
-      element: <PrivateRoutes element={<div className='h-screen bg-gray-200'><Navbar></Navbar><Dashboard /></div>} />,
+      element: <PrivateRoutes element={<div className='min-h-screen bg-gray-200'><Navbar></Navbar><Dashboard /></div>} />,
     },
     {
       path: 'login',

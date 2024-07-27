@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import CarArtifact from './CarArtifact';
+import CarGrid from './CarGrid';
 
 const VehicleMoniterComp = () => {
     const [vehicles, setVehicles] = useState([]);
@@ -20,11 +21,6 @@ const VehicleMoniterComp = () => {
 
         fetchVehicles();
     }, []);
-
-    const handleRowClick = (vehicle) => {
-        setSelectedVehicle(vehicle);
-        setIsDetailView(true); // Switch to detail view
-    };
 
     const handleBackToTable = () => {
         setIsDetailView(false); // Switch back to table view
@@ -114,38 +110,41 @@ const VehicleMoniterComp = () => {
                     </div>
                 ) : (
 
-                    <table className="min-w-full bg-white border border-gray-300">
-                        <thead className="bg-blue-200">
-                            <tr>
-                                <th className="py-2 px-4 text-left text-gray-600 font-medium border-b">ID</th>
-                                <th className="py-2 px-4 text-left text-gray-600 font-medium border-b">Type</th>
-                                <th className="py-2 px-4 text-left text-gray-600 font-medium border-b">Make</th>
-                                <th className="py-2 px-4 text-left text-gray-600 font-medium border-b">Model</th>
-                                <th className="py-2 px-4 text-left text-gray-600 font-medium border-b">Year</th>
-                                <th className="py-2 px-4 text-left text-gray-600 font-medium border-b">License Plate</th>
-                                <th className="py-2 px-4 text-left text-gray-600 font-medium border-b">Mileage</th>
-                                <th className="py-2 px-4 text-left text-gray-600 font-medium border-b">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {vehicles.map((vehicle, i) => (
-                                <tr
-                                    key={vehicle._id}
-                                    className="bg-white hover:bg-gray-100 cursor-pointer"
-                                    onClick={() => handleRowClick(vehicle)}
-                                >
-                                    <td className="py-2 px-4 border-b border-gray-300">{i + 1}.</td>
-                                    <td className="py-2 px-4 border-b border-gray-300">{vehicle.type}</td>
-                                    <td className="py-2 px-4 border-b border-gray-300">{vehicle.make}</td>
-                                    <td className="py-2 px-4 border-b border-gray-300">{vehicle.model}</td>
-                                    <td className="py-2 px-4 border-b border-gray-300">{vehicle.year}</td>
-                                    <td className="py-2 px-4 border-b border-gray-300">{vehicle.licensePlate}</td>
-                                    <td className="py-2 px-4 border-b border-gray-300">{vehicle.mileage}</td>
-                                    <td className="py-2 px-4 border-b border-gray-300">{vehicle.status}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                    // <table className="min-w-full bg-white border border-gray-300">
+                    //     <thead className="bg-blue-200">
+                    //         <tr>
+                    //             <th className="py-2 px-4 text-left text-gray-600 font-medium border-b">ID</th>
+                    //             <th className="py-2 px-4 text-left text-gray-600 font-medium border-b">Type</th>
+                    //             <th className="py-2 px-4 text-left text-gray-600 font-medium border-b">Make</th>
+                    //             <th className="py-2 px-4 text-left text-gray-600 font-medium border-b">Model</th>
+                    //             <th className="py-2 px-4 text-left text-gray-600 font-medium border-b">Year</th>
+                    //             <th className="py-2 px-4 text-left text-gray-600 font-medium border-b">License Plate</th>
+                    //             <th className="py-2 px-4 text-left text-gray-600 font-medium border-b">Mileage</th>
+                    //             <th className="py-2 px-4 text-left text-gray-600 font-medium border-b">Status</th>
+                    //         </tr>
+                    //     </thead>
+                    //     <tbody>
+                    //         {vehicles.map((vehicle, i) => (
+                    //             <tr
+                    //                 key={vehicle._id}
+                    //                 className="bg-white hover:bg-gray-100 cursor-pointer"
+                    //                 onClick={() => handleRowClick(vehicle)}
+                    //             >
+                    //                 <td className="py-2 px-4 border-b border-gray-300">{i + 1}.</td>
+                    //                 <td className="py-2 px-4 border-b border-gray-300">{vehicle.type}</td>
+                    //                 <td className="py-2 px-4 border-b border-gray-300">{vehicle.make}</td>
+                    //                 <td className="py-2 px-4 border-b border-gray-300">{vehicle.model}</td>
+                    //                 <td className="py-2 px-4 border-b border-gray-300">{vehicle.year}</td>
+                    //                 <td className="py-2 px-4 border-b border-gray-300">{vehicle.licensePlate}</td>
+                    //                 <td className="py-2 px-4 border-b border-gray-300">{vehicle.mileage}</td>
+                    //                 <td className="py-2 px-4 border-b border-gray-300">{vehicle.status}</td>
+                    //             </tr>
+                    //         ))}
+                    //     </tbody>
+                    // </table>
+                    <div className="App">
+                        <CarGrid cars={vehicles} setIsDetailView={setIsDetailView} setSelectedVehicle={setSelectedVehicle} />
+                    </div>
                 )}
             </div>
         </div>
