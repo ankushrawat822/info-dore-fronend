@@ -3,7 +3,6 @@ import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, GoogleA
 import { app } from '../Firebase'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { API_KEY } from '../utils/_helper'
 import { Toaster, toast } from 'sonner'
 
 import SyncLoader from "react-spinners/SyncLoader";
@@ -69,7 +68,7 @@ const SignUp = () => {
 
         try {
 
-          const checkUser = await axios.post(`${API_KEY}api/check-user`, { email: res.user.email })
+          const checkUser = await axios.post(`${import.meta.env.VITE_REACT_BACKEND_URL}/api/check-user`, { email: res.user.email })
           console.log(checkUser.data)
           setIsUserAlreadyExist(checkUser.data.user)
           console.log(isUserAlreadyExist)
@@ -83,7 +82,7 @@ const SignUp = () => {
 
           console.log("the user is new and signed in with google")
           try {
-            await axios.post(`${API_KEY}api/save-user-mongodb`, {
+            await axios.post(`${import.meta.env.VITE_REACT_BACKEND_URL}/api/save-user-mongodb`, {
               email: res.user.email,
               userId: res.user.uid,
             });

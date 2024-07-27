@@ -3,9 +3,6 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { Toaster, toast } from 'sonner'
 import { useNavigate } from 'react-router-dom'
-
-import { API_KEY } from '../utils/_helper.js'
-
 import SyncLoader from "react-spinners/SyncLoader";
 
 const PaymentBtn = ({ email }) => {
@@ -24,7 +21,7 @@ const PaymentBtn = ({ email }) => {
     setIsLoading(true)
 
     try {
-      const res = await fetch(`${API_KEY}api/order`, {
+      const res = await fetch(`${import.meta.env.VITE_REACT_BACKEND_URL}/api/order`, {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
@@ -56,7 +53,7 @@ const PaymentBtn = ({ email }) => {
         console.log("response", response)
 
         try {
-          const res = await axios.post(`${API_KEY}api/verify`, {
+          const res = await axios.post(`${import.meta.env.VITE_REACT_BACKEND_URL}/api/verify`, {
             razorpay_order_id: response.razorpay_order_id,
             razorpay_payment_id: response.razorpay_payment_id,
             razorpay_signature: response.razorpay_signature,

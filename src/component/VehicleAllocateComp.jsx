@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { BACKEND_URL } from '../utils/_helper'; // Replace with your actual path to helper
 import { Toaster, toast } from 'sonner';
 
 import {
@@ -30,7 +29,7 @@ const VehicleAllocateComp = () => {
     useEffect(() => {
         const fetchVehicles = async () => {
             try {
-                const response = await axios.get(`${BACKEND_URL}/api/vehicles`);
+                const response = await axios.get(`${import.meta.env.VITE_REACT_BACKEND_URL}/api/vehicles`);
                 setVehicles(response.data);
             } catch (error) {
                 console.error('Error fetching vehicle data:', error);
@@ -60,7 +59,7 @@ const VehicleAllocateComp = () => {
 
     const handleSubmit = async () => {
         try {
-            await axios.put(`${BACKEND_URL}/api/update-allocation`, {
+            await axios.put(`${import.meta.env.VITE_REACT_BACKEND_URL}/api/update-allocation`, {
                 vehicleIds: selectedVehicles,
                 allocation: allocationDetails
             });

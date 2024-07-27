@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { getAuth, sendPasswordResetEmail } from 'firebase/auth'
 import { app } from '../Firebase'
 import { useNavigate, Link, useLocation } from 'react-router-dom'
-import { API_KEY } from '../utils/_helper'
 import axios from 'axios'
 
 import SyncLoader from "react-spinners/SyncLoader";

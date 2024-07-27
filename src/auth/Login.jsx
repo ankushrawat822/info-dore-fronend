@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import { app } from '../Firebase'
 import { useNavigate, Link, useLocation } from 'react-router-dom'
-import { API_KEY } from '../utils/_helper'
 import axios from 'axios'
 
 import SyncLoader from "react-spinners/SyncLoader";
@@ -56,7 +55,7 @@ const Login = () => {
           // })
 
           try {
-            await axios.post(`${API_KEY}api/save-user-mongodb`, {
+            await axios.post(`${import.meta.env.VITE_REACT_BACKEND_URL}/api/save-user-mongodb`, {
               email: res.user.email,
               userId: res.user.uid,
             });

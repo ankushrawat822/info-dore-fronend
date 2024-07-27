@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import BuildingMap from './BuildingMap';
-import { BACKEND_URL } from '../utils/_helper';
 import axios from 'axios';
 
 
@@ -42,7 +41,7 @@ const Building = () => {
     useEffect(() => {
         const fetchBuildings = async () => {
             try {
-                const { data } = await axios.get(`${BACKEND_URL}/api/buildings`);
+                const { data } = await axios.get(`${import.meta.env.VITE_REACT_BACKEND_URL}/api/buildings`);
                 const newBuildingData = await geocodeAddresses(data);
                 setBuildings(newBuildingData);
             } catch (error) {

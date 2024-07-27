@@ -20,7 +20,6 @@ import {
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import axios from 'axios';
-import { BACKEND_URL } from '../utils/_helper';
 
 let DefaultIcon = L.icon({
     iconUrl: icon,
@@ -36,12 +35,22 @@ const BuildingMap = ({ buildings }) => {
     const [selectedBuilding, setSelectedBuilding] = useState(null);
     const [newBuildingAdded, setNewBuildingAdded] = useState(false);
     const [buildingDetails, setBuildingDetails] = useState({
+        name: '',
         type: '',
         address: '',
         status: ''
     });
 
 
+    const [addOnDetails, setAddOnDetails] = useState({
+        yearBuilt: 0,
+        totalArea: 0,
+        lastRenovation: '',
+        nextInspection: '',
+        maintenanceStatus: 0,
+        energyEfficiency: '',
+        occupancyRate: 0
+    })
 
     useEffect(() => {
         if (map && buildings.length > 0) {
@@ -72,7 +81,7 @@ const BuildingMap = ({ buildings }) => {
 
     const handleSubmit = async () => {
         try {
-            const response = await axios.post(`${BACKEND_URL}/api/add-buildings`, buildingDetails);
+            const response = await axios.post(`${import.meta.env.VITE_REACT_BACKEND_URL}/api/add-buildings`, buildingDetails);
             console.log('Building added successfully:', response.data);
             handleOpen(); // Close the dialog
             setNewBuildingAdded(!newBuildingAdded)
@@ -81,10 +90,23 @@ const BuildingMap = ({ buildings }) => {
         }
     };
 
+    const handleAddOnSubmit = async () => {
+        try {
+            const response = await axios.put(`${import.meta.env.VITE_REACT_BACKEND_URL}/api/update-buildings`, addOnDetails);
+            console.log('Building details updated successfully:', response.data);
+            handleAddOnOpen(); // Close the dialog
+        } catch (error) {
+            console.error('Error adding building:', error);
+        }
+    }
+
     // model
     const [openAddDetails, setOpenAddDetails] = useState(false);
     const [seeMore, setSeeMore] = useState(false);
     const handleOpen = () => setOpenAddDetails(!openAddDetails);
+
+    const [openAddOnDetails, setOpenAddOnDetails] = useState(false);
+    const handleAddOnOpen = () => setOpenAddOnDetails(!openAddOnDetails);
 
     return (
         <div className="h-[600px] flex">
@@ -130,9 +152,13 @@ const BuildingMap = ({ buildings }) => {
                                 </div>
                             }
 
-
-                            <div className='bg-blue-500 text-gray-100 rounded-md px-4 py-2 cursor-pointer w-fit mt-4' onClick={() => setSeeMore(!seeMore)}
-                            >{seeMore ? 'See Less' : 'See More'}</div>
+                            {
+                                selectedBuilding.yearBuilt
+                                    ? <div className='bg-blue-500 text-gray-100 rounded-md px-4 py-2 cursor-pointer w-fit mt-4' onClick={() => setSeeMore(!seeMore)}
+                                    >{seeMore ? 'See Less' : 'See More'}</div>
+                                    : <div className='bg-blue-500 text-gray-100 rounded-md px-4 py-2 cursor-pointer w-fit mt-4' onClick={handleAddOnOpen}
+                                    >Add On Details</div>
+                            }
                         </div>
                         <div className='bg-blue-500 text-gray-100 rounded-md px-4 py-2 cursor-pointer w-fit'
                             onClick={handleOpen}
@@ -148,6 +174,8 @@ const BuildingMap = ({ buildings }) => {
                 )}
             </div>
 
+
+            {/* ADD Detail button */}
             <Dialog open={openAddDetails} size="xs" handler={handleOpen}>
                 <div className="flex items-center justify-between">
                     <DialogHeader className="flex flex-col items-start">
@@ -172,21 +200,35 @@ const BuildingMap = ({ buildings }) => {
                 <DialogBody>
                     <div className="grid gap-6">
                         <Input
+                            label="Name"
+                            name="name"
+                            value={buildingDetails.name}
+                            onChange={handleInputChange}
+                            required
+
+                        />
+                        <Input
                             label="Type"
                             name="type"
                             value={buildingDetails.type}
                             onChange={handleInputChange}
+                            required
+
                         />
                         <Input
                             label="Address"
                             name="address"
                             value={buildingDetails.address}
                             onChange={handleInputChange}
+                            required
+
                         />
                         <Select
                             label="Status"
                             value={buildingDetails.status}
                             onChange={handleSelectChange}
+                            required
+
                         >
                             <Option value="Operational">Operational</Option>
                             <Option value="Renovation Needed">Renovation Needed</Option>
@@ -205,6 +247,106 @@ const BuildingMap = ({ buildings }) => {
                     </Button>
                 </DialogFooter>
             </Dialog>
+
+
+            {/* ADD on Detail button */}
+            <Dialog open={openAddOnDetails} size="xs" handler={handleAddOnOpen}>
+                <div className="flex items-center justify-between">
+                    <DialogHeader className="flex flex-col items-start">
+                        <Typography className="mb-1" variant="h4">
+                            Add Building Details
+                        </Typography>
+                    </DialogHeader>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        className="mr-3 h-5 w-5 cursor-pointer"
+                        onClick={handleAddOnOpen}
+                    >
+                        <path
+                            fillRule="evenodd"
+                            d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
+                            clipRule="evenodd"
+                        />
+                    </svg>
+                </div>
+                <DialogBody className="max-h-[60vh] overflow-y-auto">
+                    <div className="space-y-4"> {/* Adds consistent spacing between inputs */}
+                        <Input
+                            label="Year Built"
+                            name="yearBuilt"
+                            type="number"
+                            value={addOnDetails.yearBuilt}
+                            onChange={handleInputChange}
+                            required
+                        />
+                        <Input
+                            label="Total Area (sq ft)"
+                            name="totalArea"
+                            type="number"
+                            value={addOnDetails.totalArea}
+                            onChange={handleInputChange}
+                            required
+
+                        />
+                        <Input
+                            label="Last Renovation"
+                            name="lastRenovation"
+                            type="date"
+                            value={addOnDetails.lastRenovation}
+                            onChange={handleInputChange}
+                            required
+
+                        />
+                        <Input
+                            label="Next Inspection"
+                            name="nextInspection"
+                            type="date"
+                            value={addOnDetails.nextInspection}
+                            onChange={handleInputChange}
+                            required
+
+                        />
+                        <Input
+                            label="Maintenance Status (%)"
+                            name="maintenanceStatus"
+                            type="number"
+                            value={addOnDetails.maintenanceStatus}
+                            onChange={handleInputChange}
+                            required
+
+                        />
+                        <Input
+                            label="Energy Efficiency"
+                            name="energyEfficiency"
+                            value={addOnDetails.energyEfficiency}
+                            onChange={handleInputChange}
+                            required
+
+                        />
+                        <Input
+                            label="Occupancy Rate (%)"
+                            name="occupancyRate"
+                            type="number"
+                            value={addOnDetails.occupancyRate}
+                            onChange={handleInputChange}
+                            required
+
+                        />
+                    </div>
+                </DialogBody>
+                <DialogFooter className="space-x-2">
+                    <Button variant="text" color="gray" onClick={handleAddOnOpen}>
+                        Cancel
+                    </Button>
+                    <Button variant="gradient" color="blue" onClick={handleAddOnSubmit}>
+                        Add Building Details
+                    </Button>
+                </DialogFooter>
+            </Dialog>
+
+
         </div >
     );
 };

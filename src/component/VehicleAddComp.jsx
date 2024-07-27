@@ -173,7 +173,7 @@ const VehicleAddComp = () => {
                         </div>
                     </form>
                 </div>
-                <div className='h-[150px] w-[150px] border-2 border-black flex justify-center items-center cursor-pointer'>Import CSV</div>
+                <div className='h-[150px] w-[150px] border-2 border-black flex justify-center items-center curspio'>Import CSV</div>
             </div>
         </>
     )

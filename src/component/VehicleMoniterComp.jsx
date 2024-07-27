@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { BACKEND_URL } from '../utils/_helper';
+import CarArtifact from './CarArtifact';
 
 const VehicleMoniterComp = () => {
     const [vehicles, setVehicles] = useState([]);
@@ -10,7 +10,7 @@ const VehicleMoniterComp = () => {
     useEffect(() => {
         const fetchVehicles = async () => {
             try {
-                const response = await axios.get(`${BACKEND_URL}/api/vehicles`);
+                const response = await axios.get(`${import.meta.env.VITE_REACT_BACKEND_URL}/api/vehicles`);
                 setVehicles(response.data);
                 console.log(response.data)
             } catch (error) {
@@ -55,59 +55,62 @@ const VehicleMoniterComp = () => {
         { label: 'Project Name', key: 'project' },
         { label: 'Start Date', key: 'start', transform: formatDate },
         { label: 'End Date', key: 'end', transform: formatDate },
-        { label: 'AllocatedTo', key: 'allocatedTo' },
+        { label: 'AllocatedTo', key: 'allocatedT' },
     ];
 
     return (
         <div className="p-6">
             <div className="overflow-x-auto rounded-xl">
                 {isDetailView ? (
-                    <div>
-                        <div className='flex w-full justify-evenly mt-14'>
-                            <table className="max-w-1/2 border border-gray-300 rounded-lg">
-                                <tbody>
-                                    {vehicleDetails.map(({ label, key }) => (
-                                        <tr key={key}>
-                                            <th className="py-1 px-2 text-left font-medium">{label}</th>
-                                            <td className="py-1 px-2">
-                                                {key === 'lastMaintenance' || key === 'nextMaintenance'
-                                                    ? formatDate(selectedVehicle[key])
-                                                    : selectedVehicle[key]
-                                                }
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                            {console.log(selectedVehicle.allocation.isAllocation)}
-                            {selectedVehicle.allocation.isAllocation ? (
-                                <table className="max-w-1/2 border border-gray-300 rounded-lg h-fit">
-                                    <tbody>
-                                        {allocationDetails.map(({ label, key, transform }) => {
-                                            const value = transform ? transform(selectedVehicle.allocation[key]) : selectedVehicle.allocation[key];
-                                            return (
-                                                <tr key={key}>
-                                                    <th className="py-1 px-2 text-left font-medium">{label}</th>
-                                                    <td className="py-1 px-2 ">{value}</td>
-                                                </tr>
-                                            );
-                                        })}
-                                    </tbody>
-                                </table>
-                            ) : (
-                                <div>
-                                    <div className="py-2 px-4 text-red-400">Vehicle Not Allocated Yet</div>
-                                </div>
-                            )}
-                        </div>
-                        <div className='flex flex-row-reverse'>
-                            <button
-                                className="mb-4 px-4 py-2 bg-blue-500 text-white rounded mr-10"
-                                onClick={handleBackToTable}
-                            >
-                                Back to Table
-                            </button>
-                        </div>
+                    // <div>
+                    //     <div className='flex w-full justify-evenly mt-14'>
+                    //         <table className="max-w-1/2 border border-gray-300 rounded-lg">
+                    //             <tbody>
+                    //                 {vehicleDetails.map(({ label, key }) => (
+                    //                     <tr key={key}>
+                    //                         <th className="py-1 px-2 text-left font-medium">{label}</th>
+                    //                         <td className="py-1 px-2">
+                    //                             {key === 'lastMaintenance' || key === 'nextMaintenance'
+                    //                                 ? formatDate(selectedVehicle[key])
+                    //                                 : selectedVehicle[key]
+                    //                             }
+                    //                         </td>
+                    //                     </tr>
+                    //                 ))}
+                    //             </tbody>
+                    //         </table>
+                    //         {console.log(selectedVehicle.allocation.isAllocation)}
+                    //         {selectedVehicle.allocation.isAllocation ? (
+                    //             <table className="max-w-1/2 border border-gray-300 rounded-lg h-fit">
+                    //                 <tbody>
+                    //                     {allocationDetails.map(({ label, key, transform }) => {
+                    //                         const value = transform ? transform(selectedVehicle.allocation[key]) : selectedVehicle.allocation[key];
+                    //                         return (
+                    //                             <tr key={key}>
+                    //                                 <th className="py-1 px-2 text-left font-medium">{label}</th>
+                    //                                 <td className="py-1 px-2 ">{value}</td>
+                    //                             </tr>
+                    //                         );
+                    //                     })}
+                    //                 </tbody>
+                    //             </table>
+                    //         ) : (
+                    //             <div>
+                    //                 <div className="py-2 px-4 text-red-400">Vehicle Not Allocated Yet</div>
+                    //             </div>
+                    //         )}
+                    //     </div>
+                    //     <div className='flex flex-row-reverse'>
+                    //         <button
+                    //             className="mb-4 px-4 py-2 bg-blue-500 text-white rounded mr-10"
+                    //             onClick={handleBackToTable}
+                    //         >
+                    //             Back to Table
+                    //         </button>
+                    //     </div>
+                    // </div>
+                    <div className="container mx-auto py-8">
+                        <CarArtifact data={selectedVehicle} />
                     </div>
                 ) : (
 
