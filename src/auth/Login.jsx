@@ -4,7 +4,7 @@ import { app } from '../Firebase'
 import { useNavigate, Link, useLocation } from 'react-router-dom'
 import axios from 'axios'
 
-import SsyncLoader from "react-spinners/SyncLoader";
+import SyncLoader from "react-spinners/SyncLoader";
 
 import { Toaster, toast } from 'sonner'
 
