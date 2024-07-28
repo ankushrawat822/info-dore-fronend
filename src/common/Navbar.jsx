@@ -1,19 +1,20 @@
 import React, { useState } from 'react'
 import {
-    Navbar as MaterialNavbar,
-    Collapse,
-    Typography,
-   
-    IconButton,
-    Card,
-    Button,
     Dialog,
     DialogHeader,
     DialogBody,
     DialogFooter,
-    Input,
+    Typography,
     Textarea,
+    Button,
+    Input,
+    Select,
+    Navbar as MaterialNavbar,
+    Collapse,
+    IconButton,
+    Option,
 } from "@material-tailwind/react";
+import axios from 'axios';
 
 import { Link } from 'react-router-dom';
 
@@ -28,7 +29,7 @@ import { app } from '../Firebase';
 const Navbar = () => {
 
     const [open, setOpen] = React.useState(false);
- 
+
     const handleOpen = () => setOpen(!open);
 
     // nav
@@ -49,6 +50,45 @@ const Navbar = () => {
 
     const { isAuthenticated, loading } = useAuth();
 
+
+    const [email, setEmail] = useState('');
+    const [queryType, setQueryType] = useState('');
+    const [problemStatement, setProblemStatement] = useState('');
+    const [solution, setSolution] = useState('');
+    const [emailError, setEmailError] = useState('');
+
+    const validateEmail = (email) => {
+        const regex = /^[^\s@]+@gmail\.com$/;
+        return regex.test(email);
+    };
+
+    const handleSubmit = async () => {
+        if (!validateEmail(email)) {
+            setEmailError('Please enter a valid Gmail address');
+            return;
+        }
+        setEmailError('');
+
+        if (!queryType || !problemStatement) {
+            alert('Please fill in all required fields');
+            return;
+        }
+
+        try {
+            const response = await axios.post(`${import.meta.env.VITE_REACT_BACKEND_URL}/api/add-feedback`, {
+                userEmail: email,
+                department: queryType,
+                feedbackMessage: problemStatement,
+                suggestion: solution
+            });
+            console.log('Feedback submitted:', response.data);
+            handleOpen(); // Close the dialog
+            // You might want to show a success message here
+        } catch (error) {
+            console.error('Error submitting feedback:', error);
+            // You might want to show an error message here
+        }
+    };
 
 
     const navList = (
@@ -82,52 +122,51 @@ const Navbar = () => {
                 </Typography>
 
             </Link>
-         
+
 
             <Typography
-                    onClick={handleOpen} 
+                as="li"
+                variant="small"
+                color="blue-gray"
+                className={`p-1 font-normal cursor-pointer ${location.pathname !== '/' && ' hidden '}`}
+            >
+                <p className="flex items-center curpo" onClick={handleOpen}>
+                    Feedback
+                </p>
+            </Typography>
+
+            <Link to="/list-feedbacks">
+                <Typography
                     as="li"
                     variant="small"
                     color="blue-gray"
-                    className="p-1 font-normal"
+                    className={`p-1 font-normal ${location.pathname !== '/dashboard' && ' hidden '}`}
                 >
                     <p className="flex items-center">
-                        Feedback
+                        View Feedback
                     </p>
                 </Typography>
-
-
-            <Link to="/view-feedback" >
-            
-               <Typography
-                     as="li"
-                     variant="small"
-                     color="blue-gray"
-                     className="p-1 font-normal"
-                 >
-                     <p className="flex items-center">
-                         view Feedback
-                     </p>
-                 </Typography>
-
             </Link>
-               
 
         </ul>
     );
+
+
 
     return (
         <>
             <div className="bg-white h-[67px] w-[calc(100%)] ">
                 <MaterialNavbar className="sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-2 lg:px-8 lg:py-4">
                     <div className="flex items-center justify-between text-blue-gray-900">
-                        <Typography
-                            as="a"
-                            href="#"
-                            className="mr-4  cursor-pointer py-1.5 font-bold text-xl"
-                        >
-                            INFO'DORE
-                        </Typography>
+                        <Link to="/">
+                            <Typography
+                                as="a"
+                                href="#"
+                                className="mr-4  cursor-pointer py-1.5 font-bold text-xl"
+                            >
+                                INFO'DORE
+                            </Typography>
+                        </Link>
                         <div className="flex items-center gap-4">
                             <div className="mr-4 hidden lg:block">{navList}</div>
                             <div className="flex items-center gap-x-1">
@@ -268,53 +307,87 @@ const Navbar = () => {
                         </div>
                     </Collapse>
                 </MaterialNavbar>
-
-
-
                 <Dialog open={open} size="xs" handler={handleOpen}>
-        <div className="flex items-center justify-between">
-          <DialogHeader className="flex flex-col items-start">
-            {" "}
-            <Typography className="mb-1" variant="h4">
-              Send Feedback{" "}
-            </Typography>
-          </DialogHeader>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            className="mr-3 h-5 w-5"
-            onClick={handleOpen}
-          >
-            <path
-              fillRule="evenodd"
-              d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </div>
-        <DialogBody>
-          <Typography className="mb-10 -mt-7 " color="gray" variant="lead">
-            Write the message and then click button.
-          </Typography>
-          <div className="grid gap-6">
-            <Typography className="-mb-1" color="blue-gray" variant="h6">
-              Message
-            </Typography>
-            
-            <Textarea label="Message" />
-          </div>
-        </DialogBody>
-        <DialogFooter className="space-x-2">
-          <Button variant="text" color="gray" onClick={handleOpen}>
-            cancel
-          </Button>
-          <Button variant="gradient" color="blue" onClick={handleOpen}>
-            send
-          </Button>
-        </DialogFooter>
-      </Dialog>
+                    <div className="flex items-center justify-between">
+                        <DialogHeader className="flex flex-col items-start">
+                            <Typography className="mb-1" variant="h4">
+                                Send Feedback
+                            </Typography>
+                        </DialogHeader>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                            className="mr-3 h-5 w-5 cursor-pointer"
+                            onClick={handleOpen}
+                        >
+                            <path
+                                fillRule="evenodd"
+                                d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
+                                clipRule="evenodd"
+                            />
+                        </svg>
+                    </div>
+                    <DialogBody>
+                        <Typography className="mb-10 -mt-7 " color="gray" variant="lead">
+                            Please fill out the feedback form below.
+                        </Typography>
+                        <div className="grid gap-6">
+                            <div>
 
+                                <Input
+                                    type="email"
+                                    label="Email Address"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    error={emailError !== ''}
+                                    required
+                                />
+                                {emailError && <Typography color="red">{emailError}</Typography>}
+                            </div>
+                            <div>
+
+                                <Select
+                                    label="Select Query Type"
+                                    value={queryType}
+                                    onChange={(value) => setQueryType(value)}
+                                    required
+                                >
+                                    <Option value="water-supply">Water Supply</Option>
+                                    <Option value="road">Road</Option>
+                                    <Option value="vehicle">Vehicle</Option>
+                                    <Option value="other">Other</Option>
+                                </Select>
+                            </div>
+                            <div>
+
+                                <Textarea
+                                    label="Describe your problem"
+                                    value={problemStatement}
+                                    onChange={(e) => setProblemStatement(e.target.value)}
+                                    required
+                                />
+                            </div>
+                            <div>
+
+                                <Textarea
+                                    label="Your suggestion"
+                                    value={solution}
+                                    onChange={(e) => setSolution(e.target.value)}
+
+                                />
+                            </div>
+                        </div>
+                    </DialogBody>
+                    <DialogFooter className="space-x-2">
+                        <Button variant="text" color="gray" onClick={handleOpen}>
+                            Cancel
+                        </Button>
+                        <Button variant="gradient" color="blue" onClick={handleSubmit}>
+                            Submit Feedback
+                        </Button>
+                    </DialogFooter>
+                </Dialog>
             </div>
 
         </>

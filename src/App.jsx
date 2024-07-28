@@ -8,6 +8,7 @@ import Home from './home/Home'
 import Navbar from './common/Navbar'
 import PaymentSuccess from './payment/PaymentSuccess'
 import ForgotPassword from './auth/ForgotPassword'
+import Feedback from './component/feedback/Feedback'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -36,6 +37,10 @@ function App() {
     {
       path: 'forgot-password',
       element: <ForgotPassword></ForgotPassword>
+    },
+    {
+      path: 'list-feedbacks',
+      element: <><Navbar></Navbar><Feedback></Feedback></>,
     },
   ])
 
