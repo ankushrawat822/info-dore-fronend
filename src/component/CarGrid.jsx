@@ -13,7 +13,7 @@ const CarCard = ({ car, setSelectedVehicle, setIsDetailView }) => {
     };
 
     return (
-        <div className={`bg-white rounded-lg p-6 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-lg cursor-pointer ${car.status === 'Allocated' ? 'border-4 border-green-500 shadow-green-100' : ''}`} onClick={() => handleRowClick(car)}>
+        <div className={`bg-white rounded-lg p-6 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-lg cursor-pointer ${car.allocation.isAllocation ? 'border-4 border-green-500 shadow-green-100' : ''}`} onClick={() => handleRowClick(car)}>
             <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl font-bold text-gray-800">{`${car.make} ${car.model}`}</h2>
                 <span className="text-sm font-medium text-gray-600">{car.licensePlate}</span>
