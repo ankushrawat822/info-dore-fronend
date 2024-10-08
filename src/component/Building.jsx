@@ -82,50 +82,52 @@ const Building = () => {
     const [loading, setLoading] = useState(true);
     const [updated, setUpdated] = useState(false);
 
-    const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+    // const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
     // Function to geocode addresses
-    async function geocodeAddresses(buildings) {
-        const geocodedBuildings = [];
-        for (const building of buildings) {
+    // async function geocodeAddresses(buildings) {
+    //     const geocodedBuildings = [];
+    //     for (const building of buildings) {
 
-            const address = `${building.address} Indore , India`;
-            try {
-                const { data } = await axios.get(`https://us1.locationiq.com/v1/search.php`, {
-                    params: {
-                        key: import.meta.env.VITE_LOCATIONIQ_ACCESS_TOKEN,
-                        q: address,
-                        format: 'json'
-                    }
+    //         const address = `${building.address} Indore , India`;
+    //         try {
+    //             const { data } = await axios.get(`https://us1.locationiq.com/v1/search.php`, {
+    //                 params: {
+    //                     key: import.meta.env.VITE_LOCATIONIQ_ACCESS_TOKEN,
+    //                     q: address,
+    //                     format: 'json'
+    //                 }
 
-                });
+    //             });
 
-                if (data.length > 0) {
-                    geocodedBuildings.push({
-                        ...building,
-                        lat: parseFloat(data[0].lat),
-                        lng: parseFloat(data[0].lon)
-                    });
-                } else {
-                    console.warn(`No geocode results for address: ${address}`);
-                }
-            } catch (err) {
-                console.error(`Error fetching geocode for address: ${address}`, err);
-            }
+    //             if (data.length > 0) {
+    //                 geocodedBuildings.push({
+    //                     ...building,
+    //                     lat: parseFloat(data[0].lat),
+    //                     lng: parseFloat(data[0].lon)
+    //                 });
+    //             } else {
+    //                 console.warn(`No geocode results for address: ${address}`);
+    //             }
+    //         } catch (err) {
+    //             console.error(`Error fetching geocode for address: ${address}`, err);
+    //         }
 
-            await delay(1000);
-        }
-        console.log(geocodedBuildings)
-        return geocodedBuildings;
-    }
+    //         await delay(1000);
+    //     }
+    //     console.log(geocodedBuildings)
+    //     return geocodedBuildings;
+    // }
 
     // Fetch data from the API
     useEffect(() => {
         const fetchBuildings = async () => {
             try {
-                const { data } = await axios.get(`${import.meta.env.VITE_REACT_BACKEND_URL}/api/buildings`);
-                const newBuildingData = await geocodeAddresses(data);
-                setBuildings(newBuildingData);
+                // const { data } = await axios.get(`${import.meta.env.VITE_REACT_BACKEND_URL}/api/buildings`);
+                // const newBuildingData = await geocodeAddresses(data);
+                // setBuildings(newBuildingData);
+                const { data } = await axios.get(`${import.meta.env.VITE_REACT_BACKEND_URL}/api/add-lat-long`);
+                setBuildings(data);
             } catch (error) {
                 console.error('Error fetching buildings data:', error);
             } finally {

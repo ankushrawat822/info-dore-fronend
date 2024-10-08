@@ -138,13 +138,13 @@ const BuildingMap = ({ buildings, setUpdated }) => {
                 />
                 {buildings.map((building, index) => (
                     <Marker
-                        key={index}
+                        key={building._doc._id || index}
                         position={[building.lat, building.lng]}
                         eventHandlers={{
                             click: () => handleMarkerClick(building),
                         }}
                     >
-                        <Popup>{building.name}</Popup>
+                        <Popup>{building._doc.name}</Popup>
                     </Marker>
                 ))}
             </MapContainer>
@@ -152,24 +152,26 @@ const BuildingMap = ({ buildings, setUpdated }) => {
                 {selectedBuilding ? (
                     <div className='h-full flex flex-col justify-between'>
                         <div>
-                            <h2 className="text-xl font-bold mb-2 ">{selectedBuilding.name}</h2>
-                            <p><strong>Type:</strong> {selectedBuilding.type}</p>
-                            <p><strong>Address:</strong> {selectedBuilding.address}</p>
-                            <p><strong>Status:</strong> {selectedBuilding.status}</p>
+                            <h2 className="text-xl font-bold mb-2 ">{selectedBuilding._doc.name}</h2>
+                            <p><strong>Type:</strong> {selectedBuilding._doc.type}</p>
+                            <p><strong>Address:</strong> {selectedBuilding._doc.address}</p>
+                            <p><strong>Status:</strong> {selectedBuilding._doc.status}</p>
+
                             {
                                 seeMore && <div>
-                                    <p><strong>Year Built:</strong> {selectedBuilding.yearBuilt}</p>
-                                    <p><strong>Total Area:</strong> {selectedBuilding.totalArea} sq ft</p>
-                                    <p><strong>Last Renovation:</strong> {new Date(selectedBuilding.lastRenovation).toLocaleDateString()}</p>
-                                    <p><strong>Next Inspection:</strong> {new Date(selectedBuilding.nextInspection).toLocaleDateString()}</p>
-                                    <p><strong>Maintenance Status:</strong> {selectedBuilding.maintenanceStatus}%</p>
-                                    <p><strong>Energy Efficiency:</strong> {selectedBuilding.energyEfficiency}</p>
-                                    <p><strong>Occupancy Rate:</strong> {selectedBuilding.occupancyRate}%</p>
+                                    {selectedBuilding._doc.yearBuilt && <p><strong>Year Built:</strong> {selectedBuilding._doc.yearBuilt}</p>}
+                                    {selectedBuilding._doc.totalArea && <p><strong>Total Area:</strong> {selectedBuilding._doc.totalArea} sq ft</p>}
+                                    {selectedBuilding._doc.lastRenovation && <p><strong>Last Renovation:</strong> {new Date(selectedBuilding._doc.lastRenovation).toLocaleDateString()}</p>}
+                                    {selectedBuilding._doc.nextInspection && <p><strong>Next Inspection:</strong> {new Date(selectedBuilding._doc.nextInspection).toLocaleDateString()}</p>}
+                                    {selectedBuilding._doc.maintenanceStatus && <p><strong>Maintenance Status:</strong> {selectedBuilding._doc.maintenanceStatus}%</p>}
+                                    {selectedBuilding._doc.energyEfficiency && <p><strong>Energy Efficiency:</strong> {selectedBuilding._doc.energyEfficiency}</p>}
+                                    {selectedBuilding._doc.occupancyRate && <p><strong>Occupancy Rate:</strong> {selectedBuilding._doc.occupancyRate}%</p>}
                                 </div>
                             }
 
+
                             {
-                                selectedBuilding.yearBuilt
+                                selectedBuilding._doc.yearBuilt
                                     ? <div className='bg-blue-500 text-gray-100 rounded-md px-4 py-2 cursor-pointer w-fit mt-4' onClick={() => setSeeMore(!seeMore)}
                                     >{seeMore ? 'See Less' : 'See More'}</div>
                                     : <div className='bg-blue-500 text-gray-100 rounded-md px-4 py-2 cursor-pointer w-fit mt-4' onClick={handleAddOnOpen}
